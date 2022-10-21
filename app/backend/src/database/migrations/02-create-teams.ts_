@@ -1,0 +1,22 @@
+import { DataTypes, QueryInterface } from "sequelize";
+
+export default {
+  up: async (queryInterface: QueryInterface, Sequelize: typeof DataTypes) => {
+    await queryInterface.createTable('teams', {
+      id: {
+        primaryKey: true,
+        allowNull: false,
+        autoIncrement: true,
+        type: Sequelize.INTEGER,
+      },
+      teamName: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        field: 'team_name',
+      },
+    });
+  },
+  down: async (queryInterface: QueryInterface) => {
+    await queryInterface.dropTable('teams');
+  },
+} 
