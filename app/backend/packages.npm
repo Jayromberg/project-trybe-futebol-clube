@@ -1,0 +1,5 @@
+passport
+@types/passport
+passport-http-header-strategy
+passport-local
+joi
