@@ -38,3 +38,5 @@ User.init({
   modelName: 'users',
   timestamps: false,
 });
+
+export default User;
