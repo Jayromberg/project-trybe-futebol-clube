@@ -4,3 +4,4 @@ passport-http-header-strategy
 passport-local
 @types/passport-local
 joi
+express-async-errors
