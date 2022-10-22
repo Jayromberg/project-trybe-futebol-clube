@@ -1,7 +1,7 @@
-import { FindOneUserRepository } from '../services/user/FindOneUser.service';
-import User from '../database/models/User.model';
+import { FindOneUserRepository } from '../../services/user/FindOneUser.service';
+import User from '../../database/models/User.model';
 
-export default class SequelizeUserRepository implements FindOneUserRepository {
+export default class SequelizeFindOneUserRepository implements FindOneUserRepository {
   private _user = User;
 
   async findOne(email: string): Promise<{

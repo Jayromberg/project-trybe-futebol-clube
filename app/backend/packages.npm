@@ -2,4 +2,5 @@ passport
 @types/passport
 passport-http-header-strategy
 passport-local
+@types/passport-local
 joi

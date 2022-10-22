@@ -1,4 +1,4 @@
-import findOneUserRoute from './FindOneUser.route';
+import findOneUserRoute from './loginUser.route';
 
 export default {
   findOneUserRoute,
