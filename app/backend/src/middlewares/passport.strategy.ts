@@ -1,3 +1,4 @@
+import { PassportStatic } from 'passport';
 import { Strategy } from 'passport-local';
 import { compare } from 'bcryptjs';
 
@@ -16,7 +17,7 @@ const checkPassword = async (password: string, hash: string) => {
   }
 };
 
-const loginStrategy = (pass: any) => {
+const loginStrategy = (pass: PassportStatic) => {
   pass.use(new LocalStrategy(
     {
       usernameField: 'email',
@@ -36,6 +37,6 @@ const loginStrategy = (pass: any) => {
   ));
 };
 
-export default (passport: any) => {
+export default (passport: PassportStatic) => {
   loginStrategy(passport);
 };

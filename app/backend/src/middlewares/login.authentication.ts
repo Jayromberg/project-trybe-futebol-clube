@@ -9,8 +9,16 @@ const emailExists = (req: Request) => {
   }
 };
 
+const passwordExists = (req: Request) => {
+  const { password } = req.body;
+  if (!password) {
+    throw new HttpException(400, 'All fields must be filled');
+  }
+};
+
 export default (req: Request, res: Response, next: NextFunction) => {
   emailExists(req);
+  passwordExists(req);
   passport.authenticate(
     'local',
     (error, user, _info) => {

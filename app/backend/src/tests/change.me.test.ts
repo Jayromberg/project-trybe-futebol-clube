@@ -31,7 +31,7 @@ describe('Testes de Integração', () => {
       (User.findOne as sinon.SinonStub).restore();
     })
   
-    it('Returno em casos de sucesso', async () => {
+    it('Retorno em casos de sucesso', async () => {
       chaiHttpResponse = await chai.request(app)
         .post('/login')
         .send({
@@ -40,6 +40,27 @@ describe('Testes de Integração', () => {
         });
       expect(chaiHttpResponse.status).to.equal(200);
     });
+
+    it('Retorna erro 400 na ausência do email', async () => {
+      chaiHttpResponse = await chai.request(app)
+      .post('/login')
+      .send({
+        password: 'secret_admin'
+      });
+      
+      expect(chaiHttpResponse.status).to.equal(400);
+      expect(chaiHttpResponse.body).to.deep.equal({ message: 'All fields must be filled' });
+    })
+
+    it('Retorna erro 400 na ausência do senha', async () => {
+      chaiHttpResponse = await chai.request(app)
+      .post('/login')
+      .send({
+        email: 'admin@admin.com',
+      });
+      
+      expect(chaiHttpResponse.status).to.equal(400);
+      expect(chaiHttpResponse.body).to.deep.equal({ message: 'All fields must be filled' });
+    })
   });
-  
-})
+}); 
