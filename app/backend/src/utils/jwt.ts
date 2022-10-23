@@ -1,12 +1,5 @@
 import * as jwt from 'jsonwebtoken';
-
-interface IUser {
-  id: number;
-  username: string;
-  role: string;
-  email: string;
-  password: string;
-}
+import { IUser } from '../interfaces/user';
 
 export default class Token {
   private _jwt;
@@ -15,7 +8,7 @@ export default class Token {
     this._jwt = jwt;
   }
 
-  public generate(user: IUser): string {
+  public generate(user: Omit<IUser, 'password'>): string {
     const payload = {
       id: user.id,
       username: user.username,

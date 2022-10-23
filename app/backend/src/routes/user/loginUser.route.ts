@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import Token from '../../util/jwt';
+import Token from '../../utils/jwt';
 import LoginUserController from '../../controllers/user/LoginUser.controller';
 import loginAuthentication from '../../middlewares/login.authentication';
 

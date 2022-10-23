@@ -15,7 +15,7 @@
     "strictPropertyInitialization": false,
     "skipLibCheck": true,
     "paths": {
-      "*": ["node_modules/*"]
+      "*": ["node_modules/*"],
     }
   },
   "include": ["src/**/*"],
