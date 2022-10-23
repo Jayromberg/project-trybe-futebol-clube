@@ -2,7 +2,7 @@ import { Router } from 'express';
 
 import Token from '../../utils/jwt';
 import LoginUserController from '../../controllers/user/LoginUser.controller';
-import loginAuthentication from '../../middlewares/login.authentication';
+import loginAuthentication from '../../services/auth/login.authentication';
 
 const router = Router();
 

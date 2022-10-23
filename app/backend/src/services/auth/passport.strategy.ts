@@ -1,14 +1,13 @@
 import { Strategy } from 'passport-local';
 import { compare } from 'bcryptjs';
 
-import HttpException from '../utils/http.exception';
-import FindOneUserService from '../services/user/FindOneUser.service';
-import SequelizeFindOneUserRepository from '../repositories/user/SequelizeFindOneUser.repository';
+import HttpException from '../../utils/http.exception';
+import FindOneUserService from '../user/FindOneUser.service';
+import SequelizeFindOneUserRepository
+  from '../../repositories/user/SequelizeFindOneUser.repository';
 
 const repository = new SequelizeFindOneUserRepository();
 const userService = new FindOneUserService(repository);
-
-const LocalStrategy = Strategy;
 
 const checkPassword = async (password: string, hash: string) => {
   const validPassword = await compare(password, hash);
@@ -18,7 +17,7 @@ const checkPassword = async (password: string, hash: string) => {
 };
 
 const loginStrategy = (pass: any) => {
-  pass.use(new LocalStrategy(
+  pass.use(new Strategy(
     {
       usernameField: 'email',
       passwordField: 'password',

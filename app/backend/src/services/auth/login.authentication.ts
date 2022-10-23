@@ -1,6 +1,6 @@
 import passport = require('passport');
 import { NextFunction, Request, Response } from 'express';
-import HttpException from '../utils/http.exception';
+import HttpException from '../../utils/http.exception';
 
 const emailExists = (req: Request) => {
   const { email } = req.body;
