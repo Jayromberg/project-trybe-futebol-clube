@@ -4,6 +4,7 @@ import { compare } from 'bcryptjs';
 
 import SequelizeFindOneUserRepository from '../repositories/user/SequelizeFindOneUser.repository';
 import FindOneUserService from '../services/user/FindOneUser.service';
+import HttpException from '../util/http.exception';
 
 const repository = new SequelizeFindOneUserRepository();
 const userService = new FindOneUserService(repository);
@@ -13,7 +14,7 @@ const LocalStrategy = Strategy;
 const checkPassword = async (password: string, hash: string) => {
   const validPassword = await compare(password, hash);
   if (!validPassword) {
-    throw new Error('Invalid password');
+    throw new HttpException(401, 'Incorrect email or password');
   }
 };
 
@@ -27,10 +28,11 @@ const loginStrategy = (pass: PassportStatic) => {
     (async (email, password, done) => {
       try {
         const userData = await userService.findOne(email);
-        if (!userData) throw new Error('User not found');
-        checkPassword(password, userData.password);
+        if (!userData) throw new HttpException(401, 'Incorrect email or password');
+        await checkPassword(password, userData.password);
         done(null, userData);
       } catch (error) {
+        console.log('oi');
         done(error);
       }
     }),
