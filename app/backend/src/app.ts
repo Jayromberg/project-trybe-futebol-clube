@@ -1,5 +1,8 @@
 import * as express from 'express';
+import passport = require('passport');
 import routesApp from './routes';
+
+import passportStrategy from './services/auth/passport.strategy';
 
 class App {
   public app: express.Express;
@@ -9,7 +12,7 @@ class App {
 
     this.config();
     this.routes();
-
+    passportStrategy(passport);
     // Não remover essa rota
     this.app.get('/', (req, res) => res.json({ ok: true }));
   }
