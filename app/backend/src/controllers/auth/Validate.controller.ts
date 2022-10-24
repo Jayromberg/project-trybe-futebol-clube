@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { RequestCustom } from '../../interfaces/user';
 
-export default class AccessController {
+export default class ValidateController {
   private _request: RequestCustom;
 
   role(req: Request, res: Response) {

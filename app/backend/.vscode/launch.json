@@ -1,0 +1,22 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Docker: Debug",
+      "type": "node",
+      "request": "attach",
+      "restart": true,
+      // Porta que o container ira exportar que o debbuger se conecte
+      "port": 9229,
+      "address": "localhost",
+      // Pasta onde o projeto esta no ambiente local, a variavel ${workspaceFolder} já mapeia esse caminho
+      "localRoot": "${workspaceFolder}/",
+      // Pasta onde o projeto esta no ambiente remoto, aqui é necessario mapear o caminho completo 
+      "remoteRoot": "/app-backend",
+      // Pastas para serem ignoradas pelo debbuger, no caso o node_modules
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 import login from './login.route';
-import access from './access.route';
+import validate from './validate.route';
 
 export default {
   login,
-  access,
+  validate,
 };

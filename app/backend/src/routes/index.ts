@@ -4,7 +4,7 @@ import auth from './auth';
 
 export default (app: Application) => {
   app.use(
-    auth.access,
+    auth.validate,
     auth.login,
     httpErrorMiddleware,
   );

@@ -1,11 +1,11 @@
 import { Router } from 'express';
 
 import accessAuthentication from '../../services/auth/access.authentication';
-import AccessController from '../../controllers/auth/access.controller';
+import ValidateController from '../../controllers/auth/Validate.controller';
 
 const router = Router();
 
-const controller = new AccessController();
+const controller = new ValidateController();
 
 router.get(
   '/login/validate',
