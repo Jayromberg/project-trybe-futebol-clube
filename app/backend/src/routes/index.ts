@@ -1,10 +1,11 @@
 import { Application } from 'express';
 import httpErrorMiddleware from '../middlewares/http.error';
-import user from './user';
+import auth from './auth';
 
 export default (app: Application) => {
   app.use(
-    user.login,
+    auth.access,
+    auth.login,
     httpErrorMiddleware,
   );
 };

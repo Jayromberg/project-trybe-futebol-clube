@@ -1,12 +1,8 @@
 import { Request, Response } from 'express';
 import Token from '../../utils/jwt';
-import { IUser } from '../../interfaces/user';
+import { RequestCustom } from '../../interfaces/user';
 
-export interface RequestCustom extends Request {
-  user: IUser;
-}
-
-export default class LoginUserController {
+export default class LoginController {
   private _jwt: Token;
 
   constructor(jwt: Token) {

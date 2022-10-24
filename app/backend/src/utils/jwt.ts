@@ -13,6 +13,7 @@ export default class Token {
       id: user.id,
       username: user.username,
       email: user.email,
+      role: user.role,
     };
     const secret: string = process.env.JWT_SECRET || '';
     const token = this._jwt.sign(payload, secret);
