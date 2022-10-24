@@ -41,6 +41,7 @@ describe('Teste de integração da rola /login', () => {
       });
 
     expect(chaiHttpResponse.status).to.equal(200);
+    expect(chaiHttpResponse.body).to.haveOwnProperty("token")
   });
 
   it('Retorna erro 400 na ausência do email', async () => {
