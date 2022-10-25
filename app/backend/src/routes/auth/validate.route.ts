@@ -10,7 +10,7 @@ const controller = new ValidateController();
 router.get(
   '/login/validate',
   accessAuthentication,
-  (req, res) => controller.role(req, res),
+  (req, res) => controller.handle(req, res),
 );
 
 export default router;

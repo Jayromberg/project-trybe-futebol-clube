@@ -9,7 +9,7 @@ export default class LoginController {
     this._jwt = jwt;
   }
 
-  generateToken(req: Request, res: Response) {
+  handle(req: Request, res: Response) {
     const request = req as RequestCustom;
     const { id, username, role, email } = request.user;
     const token = this._jwt.generate({ id, username, role, email });

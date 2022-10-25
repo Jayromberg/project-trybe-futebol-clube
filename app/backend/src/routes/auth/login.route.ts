@@ -12,7 +12,7 @@ const controller = new LoginController(service);
 router.post(
   '/login',
   loginAuthentication,
-  (req, res) => controller.generateToken(req, res),
+  (req, res) => controller.handle(req, res),
 );
 
 export default router;

@@ -4,9 +4,9 @@ import * as jwt from 'jsonwebtoken';
 import { compare } from 'bcryptjs';
 
 import HttpException from '../../utils/http.exception';
-import FindOneUserService from '../user/FindOneUser.service';
+import FindOneUserService from '../users/FindOneUser.service';
 import SequelizeFindOneUserRepository
-  from '../../repositories/user/SequelizeFindOneUser.repository';
+  from '../../repositories/users/SequelizeFindOneUser.repository';
 
 const repository = new SequelizeFindOneUserRepository();
 const userService = new FindOneUserService(repository);

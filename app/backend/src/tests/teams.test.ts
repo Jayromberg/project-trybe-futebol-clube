@@ -53,7 +53,7 @@ describe('Teste de integração da rola /login/validate', () => {
 
   after(async () => {
     (User.findOne as sinon.SinonStub).restore();
-    (Team.findOne as sinon.SinonStub).restore();
+    (Team.findAll as sinon.SinonStub).restore();
   })
 
   it('Returno da rota /teams em caso de sucesso', async () => {
@@ -62,7 +62,6 @@ describe('Teste de integração da rola /login/validate', () => {
     .set('Authorization', token)
 
     expect(chaiHttpResponse.status).to.equal(200);
-    expect(chaiHttpResponse.body).to.haveOwnProperty("id", "teamName");
     expect(chaiHttpResponse.body).to.deep.equal([
       {
         id: 1,

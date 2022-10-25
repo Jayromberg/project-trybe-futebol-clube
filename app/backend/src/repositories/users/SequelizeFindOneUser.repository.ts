@@ -1,4 +1,4 @@
-import { FindOneUserRepository } from '../../services/user/FindOneUser.service';
+import { FindOneUserRepository } from '../../services/users/FindOneUser.service';
 import User from '../../database/models/User.model';
 import { IUser } from '../../interfaces/user';
 
