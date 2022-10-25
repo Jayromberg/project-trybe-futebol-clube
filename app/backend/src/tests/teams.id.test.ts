@@ -14,7 +14,7 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe('Teste de integração da rola /teams', () => {
+describe('Teste de integração da rola /teams/:id', () => {
   let chaiHttpResponse: Response;
   let token: string;
 
@@ -30,16 +30,11 @@ describe('Teste de integração da rola /teams', () => {
       } as User);
 
     sinon
-      .stub(Team, "findAll")
-      .resolves([
-        {
-          id: 1,
-          teamName: "Avaí/Kindermann"
-        },
-        {
+      .stub(Team, "findOne")
+      .resolves({
           id: 2,
           teamName: "Bahia"
-        }] as Team[],);
+        } as Team);
 
     chaiHttpResponse = await chai.request(app)
       .post('/login')
@@ -53,23 +48,19 @@ describe('Teste de integração da rola /teams', () => {
 
   after(async () => {
     (User.findOne as sinon.SinonStub).restore();
-    (Team.findAll as sinon.SinonStub).restore();
+    (Team.findOne as sinon.SinonStub).restore();
   })
 
-  it('Returno da rota /teams em caso de sucesso', async () => {
+  it('Returno da rota /teams/:id em caso de sucesso', async () => {
     chaiHttpResponse = await chai.request(app)
-    .get('/teams')
+    .get('/teams/2')
     .set('Authorization', token)
 
     expect(chaiHttpResponse.status).to.equal(200);
-    expect(chaiHttpResponse.body).to.deep.equal([
-      {
-        id: 1,
-        teamName: "Avaí/Kindermann"
-      },
+    expect(chaiHttpResponse.body).to.deep.equal(
       {
         id: 2,
         teamName: "Bahia"
-      }]);
+      });
   })
 });
