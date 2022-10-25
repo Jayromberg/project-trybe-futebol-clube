@@ -4,7 +4,7 @@ import HttpException from '../../utils/http.exception';
 
 const tokenExist = (token: string | undefined) => {
   if (!token) {
-    throw new HttpException(400, 'TOKEN_NOT_FOUND');
+    throw new HttpException(400, 'Token not found');
   }
 };
 
@@ -15,7 +15,7 @@ export default (req: Request, res: Response, next: NextFunction) => {
     'header',
     (error, user, _info) => {
       if (error && error.name === 'JsonWebTokenError') {
-        return next(new Error('INVALID_TOKEN'));
+        return next(new HttpException(401, 'Invalid Token'));
       }
 
       if (error) return next(error);

@@ -8,7 +8,6 @@ import { app } from '../app';
 import User from '../database/models/User.model';
 
 import { Response } from 'superagent';
-import { log } from 'console';
 
 chai.use(chaiHttp);
 
@@ -51,5 +50,23 @@ describe('Teste de integração da rola /login/validate', () => {
     expect(chaiHttpResponse.status).to.equal(200);
     expect(chaiHttpResponse.body).to.haveOwnProperty("role")
     expect(chaiHttpResponse.body).to.deep.equal({ role: 'admin' });
+  })
+
+  it('Returna erro 400 em caso de ausência de token', async () => {
+    chaiHttpResponse = await chai.request(app)
+    .get('/login/validate')
+
+
+    expect(chaiHttpResponse.status).to.equal(400);
+    expect(chaiHttpResponse.body).to.deep.equal({ message: 'Token not found' });
+  })
+
+  it('Returna erro 401 no caso de token invalido', async () => {
+    chaiHttpResponse = await chai.request(app)
+    .get('/login/validate')
+    .set('Authorization', 'token_invalido')
+
+    expect(chaiHttpResponse.status).to.equal(401);
+    expect(chaiHttpResponse.body).to.deep.equal({ message: 'Invalid Token' });
   })
 })
