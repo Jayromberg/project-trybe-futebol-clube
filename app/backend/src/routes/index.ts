@@ -7,6 +7,7 @@ export default (app: Application) => {
   app.use(
     auth.validate,
     auth.login,
+    teams.findOne,
     teams.findAll,
     httpErrorMiddleware,
   );
