@@ -15,7 +15,7 @@ export default (req: Request, res: Response, next: NextFunction) => {
     'header',
     (error, user, _info) => {
       if (error && error.name === 'JsonWebTokenError') {
-        return next(new HttpException(401, 'Invalid Token'));
+        return next(new HttpException(401, 'Token must be a valid token'));
       }
 
       if (error) return next(error);
