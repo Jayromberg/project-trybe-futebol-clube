@@ -9,7 +9,6 @@ import User from '../database/models/User.model';
 import Match from '../database/models/Match.model';
 
 import { Response } from 'superagent';
-import { any } from 'joi';
 
 chai.use(chaiHttp);
 
@@ -51,7 +50,7 @@ describe('Teste de integração da rola POST /matches', () => {
 
   it('Returno da rota PUT /matches em caso de sucesso', async () => {
     chaiHttpResponse = await chai.request(app)
-      .put('/matches/1/finish')
+      .patch('/matches/1/finish')
       .set('Authorization', token)
 
     expect(chaiHttpResponse.status).to.equal(200);

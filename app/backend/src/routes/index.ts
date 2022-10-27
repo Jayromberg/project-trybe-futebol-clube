@@ -10,6 +10,7 @@ export default (app: Application) => {
     auth.login,
     teams.findOne,
     teams.findAll,
+    matches.update,
     matches.findAll,
     matches.create,
     httpErrorMiddleware,
