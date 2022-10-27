@@ -12,6 +12,7 @@ export default (app: Application) => {
     teams.findOne,
     teams.findAll,
     matches.update,
+    matches.updateScoreboard,
     matches.findAll,
     matches.create,
     httpErrorMiddleware,
