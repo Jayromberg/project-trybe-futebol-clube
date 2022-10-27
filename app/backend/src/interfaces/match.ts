@@ -1,10 +1,13 @@
 export interface IMatch {
-  id: number,
   homeTeam: number,
   homeTeamGoals: number,
   awayTeam: number,
   awayTeamGoals: number,
-  inProgress: boolean,
+  inProgress?: boolean,
+}
+
+export interface IMatchResponse extends IMatch {
+  id: number,
   teamHome?: {
     teamName: string,
   },

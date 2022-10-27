@@ -11,6 +11,7 @@ export default (app: Application) => {
     teams.findOne,
     teams.findAll,
     matches.findAll,
+    matches.create,
     httpErrorMiddleware,
   );
 };

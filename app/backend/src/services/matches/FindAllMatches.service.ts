@@ -1,7 +1,7 @@
-import { IMatch } from '../../interfaces/match';
+import { IMatchResponse } from '../../interfaces/match';
 
 export interface FindAllMatchesRepository {
-  findAll(): Promise<IMatch[] | []>;
+  findAll(): Promise<IMatchResponse[] | []>;
 }
 
 export default class FindAllMatchesService {

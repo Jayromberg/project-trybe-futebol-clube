@@ -1,7 +1,7 @@
-import { IMatch } from '../../interfaces/match';
+import { IMatchResponse } from '../../interfaces/match';
 
 export interface FindInProgressMatchesRepository {
-  findAll(inProgress: boolean): Promise<IMatch[] | []>;
+  findAll(inProgress: boolean): Promise<IMatchResponse[] | []>;
 }
 
 export default class FindInProgressMatchesService {
