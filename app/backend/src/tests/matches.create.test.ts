@@ -7,6 +7,7 @@ import chaiHttp = require('chai-http');
 import { app } from '../app';
 import User from '../database/models/User.model';
 import Match from '../database/models/Match.model';
+import Team from '../database/models/Team.model';
 
 import { Response } from 'superagent';
 
@@ -28,6 +29,19 @@ describe('Teste de integração da rola POST /matches', () => {
         email: 'admin@admin.com',
         password: '$2a$08$xi.Hxk1czAO0nZR..B393u10aED0RQ1N3PAEXQ7HxtLjKPEZBu.PW'
       } as User);
+    
+    sinon
+    .stub(Team, "findOne")
+    .onFirstCall()
+    .resolves({
+        id: 16,
+        teamName: "Bahia"
+      } as Team)
+    .onSecondCall()
+    .resolves({
+      id: 8,
+      teamName: "São Paulo"
+    } as Team);
 
     sinon
       .stub(Match, "create")
@@ -53,6 +67,7 @@ describe('Teste de integração da rola POST /matches', () => {
 
   after(async () => {
     (User.findOne as sinon.SinonStub).restore();
+    (Team.findOne as sinon.SinonStub).restore();
     (Match.create as sinon.SinonStub).restore();
   })
 
@@ -94,7 +109,7 @@ describe('Teste de integração da rola POST /matches', () => {
     expect(chaiHttpResponse.body).to.deep.equal({ message: "It is not possible to create a match with two equal teams" });
   })
 
-  it('Returna erro 401 no caso de token invalido', async () => {
+  it('Retorna erro 401 no caso de token invalido', async () => {
     chaiHttpResponse = await chai.request(app)
     .post('/matches')
     .send({
@@ -107,5 +122,20 @@ describe('Teste de integração da rola POST /matches', () => {
 
     expect(chaiHttpResponse.status).to.equal(401);
     expect(chaiHttpResponse.body).to.deep.equal({ message: 'Token must be a valid token' });
+  })
+
+  it('Retorna erro 404 no caso de time invalido', async () => {
+    chaiHttpResponse = await chai.request(app)
+    .post('/matches')
+    .send({
+      homeTeam: 9999,
+      homeTeamGoals: 1,
+      awayTeam: 8,
+      awayTeamGoals: 1,
+    })
+    .set('Authorization', token)
+
+    expect(chaiHttpResponse.status).to.equal(404);
+    expect(chaiHttpResponse.body).to.deep.equal({ message: 'There is no team with such id!' });
   })
 });
