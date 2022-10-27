@@ -38,7 +38,7 @@ describe('Teste de integração da rola POST /matches', () => {
           homeTeamGoals: 1,
           awayTeam: 8,
           awayTeamGoals: 1,
-          inProgress: false,
+          inProgress: true,
         } as Match);
 
     chaiHttpResponse = await chai.request(app)
@@ -59,6 +59,12 @@ describe('Teste de integração da rola POST /matches', () => {
   it('Returno da rota POST /matches em caso de sucesso', async () => {
     chaiHttpResponse = await chai.request(app)
       .post('/matches')
+      .send({
+        homeTeam: 16,
+        homeTeamGoals: 1,
+        awayTeam: 8,
+        awayTeamGoals: 1,
+      })
       .set('Authorization', token)
 
     expect(chaiHttpResponse.status).to.equal(201);
@@ -69,7 +75,37 @@ describe('Teste de integração da rola POST /matches', () => {
           homeTeamGoals: 1,
           awayTeam: 8,
           awayTeamGoals: 1,
-          inProgress: false,
+          inProgress: true,
         });
+  })
+
+  it('Retorna o erro 422 ao tentar criar uma partida com times iguais', async () => {
+    chaiHttpResponse = await chai.request(app)
+      .post('/matches')
+      .send({
+        homeTeam: 8,
+        homeTeamGoals: 1,
+        awayTeam: 8,
+        awayTeamGoals: 1,
+      })
+      .set('Authorization', token)
+
+    expect(chaiHttpResponse.status).to.equal(422);
+    expect(chaiHttpResponse.body).to.deep.equal({ message: "It is not possible to create a match with two equal teams" });
+  })
+
+  it('Returna erro 401 no caso de token invalido', async () => {
+    chaiHttpResponse = await chai.request(app)
+    .post('/matches')
+    .send({
+      homeTeam: 16,
+      homeTeamGoals: 1,
+      awayTeam: 8,
+      awayTeamGoals: 1,
+    })
+    .set('Authorization', 'token_invalido')
+
+    expect(chaiHttpResponse.status).to.equal(401);
+    expect(chaiHttpResponse.body).to.deep.equal({ message: 'Token must be a valid token' });
   })
 });

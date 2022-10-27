@@ -67,6 +67,6 @@ describe('Teste de integração da rola /login/validate', () => {
     .set('Authorization', 'token_invalido')
 
     expect(chaiHttpResponse.status).to.equal(401);
-    expect(chaiHttpResponse.body).to.deep.equal({ message: 'Invalid Token' });
+    expect(chaiHttpResponse.body).to.deep.equal({ message: 'Token must be a valid token' });
   })
 })
