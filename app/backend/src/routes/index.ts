@@ -1,4 +1,5 @@
 import { Application } from 'express';
+import 'express-async-errors';
 import httpErrorMiddleware from '../middlewares/http.error';
 import auth from './auth';
 import teams from './teams';
