@@ -12,7 +12,7 @@ export default class FindAllMatchesService {
   }
 
   async findAll() {
-    const teams = await this._repository.findAll();
-    return teams;
+    const matches = await this._repository.findAll();
+    return matches;
   }
 }

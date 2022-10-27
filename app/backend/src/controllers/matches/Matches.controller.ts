@@ -8,7 +8,7 @@ export default class FindAllMatchesController {
     this._service = service;
   }
 
-  async handle(_req: Request, res: Response) {
+  async handle(req: Request, res: Response) {
     const matches = await this._service.findAll();
     return res.status(200).json(matches);
   }
