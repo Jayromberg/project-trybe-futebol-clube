@@ -18,7 +18,7 @@ export default class CreateMatchService {
     homeTeamGoals: number,
     awayTeamGoals: number,
   ) {
-    const match = new Match(homeTeam, awayTeam, homeTeamGoals, awayTeamGoals) as IMatch;
+    const match = new Match(homeTeam, awayTeam, homeTeamGoals, awayTeamGoals);
     const data = await this._repository.create(match);
     return data;
   }
