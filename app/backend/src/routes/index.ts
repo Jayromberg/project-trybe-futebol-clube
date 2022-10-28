@@ -4,6 +4,7 @@ import httpErrorMiddleware from '../middlewares/http.error';
 import auth from './auth';
 import teams from './teams';
 import matches from './matches';
+import leaderboard from './leaderboard';
 
 export default (app: Application) => {
   app.use(
@@ -15,6 +16,7 @@ export default (app: Application) => {
     matches.updateScoreboard,
     matches.findAll,
     matches.create,
+    leaderboard.home,
     httpErrorMiddleware,
   );
 };
