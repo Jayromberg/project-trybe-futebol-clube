@@ -1,10 +1,11 @@
-// import { IMatchResponse } from '../../interfaces/match';
+import { ILeaderboard } from '../../interfaces/leaderboard';
+import { IMatchResponse } from '../../interfaces/match';
 import FindAllMatchesService, { FindAllMatchesRepository } from '../matches/FindAllMatches.service';
 
 export default class LeaderboardService extends FindAllMatchesService {
-  private _matches: any[];
+  private _matches: IMatchResponse[];
   private _inProgress: boolean;
-  private _leaderboard: any[];
+  private _leaderboard: ILeaderboard[];
 
   constructor(repository: FindAllMatchesRepository, inProgress: boolean) {
     super(repository);
@@ -31,27 +32,40 @@ export default class LeaderboardService extends FindAllMatchesService {
     this._matches = this._matches.filter((match) => match.inProgress === this._inProgress);
   }
 
-  private leaderboardImplementation() {
-    this._leaderboard = this._matches.reduce((acc, match) => {
-      if (!acc.some((team: any) => match.teamHome.teamName === team.name)) {
-        acc.push({
-          name: match.teamHome.teamName,
-          totalPoints: this.totalPointsImplementation(match),
-          totalGames: this.totalGamesImplementation(match),
-          totalVictories: this.totalVictoriesImplementation(match),
-          totalDraws: this.totalDrawsImplementation(match),
-          totalLosses: this.totalLossesImplementation(match),
-          goalsFavor: this.goalsFavorImplementation(match),
-          goalsOwn: this.goalsOwnImplementation(match),
-          goalsBalance: this.goalsBalanceImplementation(match),
-          efficiency: this.efficiencyImplementation(match),
-        });
+  private leaderboardImplementation(): void {
+    const uniqueValue: ILeaderboard[] = [];
+
+    this._matches.forEach((match: IMatchResponse) => {
+      if (
+        !uniqueValue.some((teamHome: ILeaderboard) => match.teamHome?.teamName === teamHome.name)
+      ) {
+        uniqueValue.push(
+          this.leaderboardData(match),
+        );
       }
-      return acc;
-    }, []);
+    });
+
+    this._leaderboard = uniqueValue;
   }
 
-  private totalGamesImplementation({ homeTeam }: any): number {
+  private leaderboardData(match: IMatchResponse) {
+    const leaderboard = {
+      name: match.teamHome?.teamName,
+      totalPoints: this.totalPointsImplementation(match),
+      totalGames: this.totalGamesImplementation(match),
+      totalVictories: this.totalVictoriesImplementation(match),
+      totalDraws: this.totalDrawsImplementation(match),
+      totalLosses: this.totalLossesImplementation(match),
+      goalsFavor: this.goalsFavorImplementation(match),
+      goalsOwn: this.goalsOwnImplementation(match),
+      goalsBalance: this.goalsBalanceImplementation(match),
+      efficiency: this.efficiencyImplementation(match),
+    };
+
+    return leaderboard;
+  }
+
+  private totalGamesImplementation({ homeTeam }: { homeTeam: number }) {
     return this._matches.reduce((acc, match) => {
       let count = acc;
       if (match.homeTeam === homeTeam) {
@@ -61,7 +75,7 @@ export default class LeaderboardService extends FindAllMatchesService {
     }, 0);
   }
 
-  private totalVictoriesImplementation({ homeTeam }: any) {
+  private totalVictoriesImplementation({ homeTeam }: { homeTeam: number }) {
     return this._matches.reduce((acc, match) => {
       let count = acc;
       if (match.homeTeamGoals > match.awayTeamGoals && match.homeTeam === homeTeam) {
@@ -71,7 +85,7 @@ export default class LeaderboardService extends FindAllMatchesService {
     }, 0);
   }
 
-  private totalDrawsImplementation({ homeTeam }: any) {
+  private totalDrawsImplementation({ homeTeam }: { homeTeam: number }) {
     return this._matches.reduce((acc, match) => {
       let count = acc;
       if (match.homeTeamGoals === match.awayTeamGoals && match.homeTeam === homeTeam) {
@@ -81,8 +95,8 @@ export default class LeaderboardService extends FindAllMatchesService {
     }, 0);
   }
 
-  private totalLossesImplementation({ homeTeam }: any) {
-    return this._matches.reduce((acc: any, match) => {
+  private totalLossesImplementation({ homeTeam }: { homeTeam: number }) {
+    return this._matches.reduce((acc, match) => {
       let count = acc;
       if (match.homeTeamGoals < match.awayTeamGoals && match.homeTeam === homeTeam) {
         count += 1;
@@ -91,7 +105,7 @@ export default class LeaderboardService extends FindAllMatchesService {
     }, 0);
   }
 
-  private goalsFavorImplementation({ homeTeam }: any) {
+  private goalsFavorImplementation({ homeTeam }: { homeTeam: number }) {
     return this._matches.reduce((acc, match) => {
       let count = acc;
       if (match.homeTeam === homeTeam) {
@@ -101,7 +115,7 @@ export default class LeaderboardService extends FindAllMatchesService {
     }, 0);
   }
 
-  private goalsOwnImplementation({ homeTeam }: any) {
+  private goalsOwnImplementation({ homeTeam }: { homeTeam: number }) {
     return this._matches.reduce((acc, match) => {
       let count = acc;
       if (match.homeTeam === homeTeam) {
@@ -111,7 +125,7 @@ export default class LeaderboardService extends FindAllMatchesService {
     }, 0);
   }
 
-  private goalsBalanceImplementation(match: any) {
+  private goalsBalanceImplementation(match: IMatchResponse) {
     const goalsFavor = this.goalsFavorImplementation(match);
     const goalsOwn = this.goalsOwnImplementation(match);
 
@@ -119,7 +133,7 @@ export default class LeaderboardService extends FindAllMatchesService {
     return goalsBalance;
   }
 
-  private totalPointsImplementation(match: any) {
+  private totalPointsImplementation(match: IMatchResponse) {
     const totalVictories = this.totalVictoriesImplementation(match);
     const totalDraws = this.totalDrawsImplementation(match);
     const totalLosses = this.totalLossesImplementation(match);
@@ -128,7 +142,7 @@ export default class LeaderboardService extends FindAllMatchesService {
     return totalPoints;
   }
 
-  private efficiencyImplementation(match: any) {
+  private efficiencyImplementation(match: IMatchResponse) {
     const totalPoints = this.totalPointsImplementation(match);
     const totalGames = this.totalGamesImplementation(match);
 
@@ -152,12 +166,12 @@ export default class LeaderboardService extends FindAllMatchesService {
 
   private secondOrder() {
     this._leaderboard.sort((a, b) => {
-      const totalPointsA = a.totalVictories;
-      const totalPointsB = b.totalVictories;
-      if (totalPointsA > totalPointsB) {
+      const totalVictoriesA = a.totalVictories;
+      const totalVictoriesB = b.totalVictories;
+      if (totalVictoriesA > totalVictoriesB) {
         return -1;
       }
-      if (totalPointsA < totalPointsB) {
+      if (totalVictoriesA < totalVictoriesB) {
         return 1;
       }
       return 0;
@@ -166,12 +180,12 @@ export default class LeaderboardService extends FindAllMatchesService {
 
   private thirdOrder() {
     this._leaderboard.sort((a, b) => {
-      const totalPointsA = a.goalsBalance;
-      const totalPointsB = b.goalsBalance;
-      if (totalPointsA > totalPointsB) {
+      const goalsBalanceA = a.goalsBalance;
+      const goalsBalanceB = b.goalsBalance;
+      if (goalsBalanceA > goalsBalanceB) {
         return -1;
       }
-      if (totalPointsA < totalPointsB) {
+      if (goalsBalanceA < goalsBalanceB) {
         return 1;
       }
       return 0;
@@ -180,12 +194,12 @@ export default class LeaderboardService extends FindAllMatchesService {
 
   private fourthOrder() {
     this._leaderboard.sort((a, b) => {
-      const totalPointsA = a.goalsFavor;
-      const totalPointsB = b.goalsFavor;
-      if (totalPointsA > totalPointsB) {
+      const goalsFavorA = a.goalsFavor;
+      const goalsFavorB = b.goalsFavor;
+      if (goalsFavorA > goalsFavorB) {
         return -1;
       }
-      if (totalPointsA < totalPointsB) {
+      if (goalsFavorA < goalsFavorB) {
         return 1;
       }
       return 0;
@@ -194,12 +208,12 @@ export default class LeaderboardService extends FindAllMatchesService {
 
   private fifthOrder() {
     this._leaderboard.sort((a, b) => {
-      const totalPointsA = a.goalsOwn;
-      const totalPointsB = b.goalsOwn;
-      if (totalPointsA > totalPointsB) {
+      const goalsOwnA = a.goalsOwn;
+      const goalsOwnB = b.goalsOwn;
+      if (goalsOwnA > goalsOwnB) {
         return -1;
       }
-      if (totalPointsA < totalPointsB) {
+      if (goalsOwnA < goalsOwnB) {
         return 1;
       }
       return 0;
