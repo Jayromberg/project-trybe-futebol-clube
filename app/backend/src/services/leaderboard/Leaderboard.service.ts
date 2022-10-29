@@ -33,19 +33,19 @@ export default class LeaderboardService extends FindAllMatchesService {
   }
 
   private leaderboardImplementation(): void {
-    const uniqueValue: ILeaderboard[] = [];
+    const leaderboard: ILeaderboard[] = [];
 
     this._matches.forEach((match: IMatchResponse) => {
       if (
-        !uniqueValue.some((teamHome: ILeaderboard) => match.teamHome?.teamName === teamHome.name)
+        !leaderboard.some((teamHome: ILeaderboard) => match.teamHome?.teamName === teamHome.name)
       ) {
-        uniqueValue.push(
+        leaderboard.push(
           this.leaderboardData(match),
         );
       }
     });
 
-    this._leaderboard = uniqueValue;
+    this._leaderboard = leaderboard;
   }
 
   private leaderboardData(match: IMatchResponse) {
