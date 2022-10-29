@@ -14,7 +14,7 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe('Teste de integração da rola POST /matches', () => {
+describe('Teste de integração da rola PATCH /matches/:id', () => {
   let chaiHttpResponse: Response;
   let token: string;
 
@@ -48,12 +48,16 @@ describe('Teste de integração da rola POST /matches', () => {
     (Match.update as sinon.SinonStub).restore();
   })
 
-  it('Returno da rota PATCH /matches em caso de sucesso', async () => {
+  it('Returno da rota PATCH /matches/:id em caso de sucesso', async () => {
     chaiHttpResponse = await chai.request(app)
-      .patch('/matches/1/finish')
+      .patch('/matches/1')
+      .send({
+        homeTeamGoals: 3,
+        awayTeamGoals: 1
+      })
       .set('Authorization', token)
 
     expect(chaiHttpResponse.status).to.equal(200);
-    expect(chaiHttpResponse.body).to.deep.equal({ message: "Finished" });
+    expect(chaiHttpResponse.body).to.deep.equal({ message: "Updated score" });
   })
 });
