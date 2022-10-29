@@ -1,10 +1,11 @@
 import { Request, Response } from 'express';
+import LeaderboardAway from '../../services/leaderboard/Leaderboard.away.service';
 import LeaderboardHome from '../../services/leaderboard/Leaderboard.home.service';
 
 export default class LeaderboardController {
-  private _service: LeaderboardHome;
+  private _service: LeaderboardHome | LeaderboardAway;
 
-  constructor(service: LeaderboardHome) {
+  constructor(service: LeaderboardHome | LeaderboardAway) {
     this._service = service;
   }
 

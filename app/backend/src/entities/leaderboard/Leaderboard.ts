@@ -37,23 +37,42 @@ export default abstract class Leaderboard extends FindAllMatchesService {
 
   abstract leaderboardData(match: IMatchResponse): ILeaderboard;
 
-  abstract totalGamesImplementation({ homeTeam }: { homeTeam: number }): number;
+  abstract totalGamesImplementation(match: IMatchResponse): number;
 
-  abstract totalVictoriesImplementation({ homeTeam }: { homeTeam: number }):number;
+  abstract totalVictoriesImplementation(match: IMatchResponse):number;
 
-  abstract totalDrawsImplementation({ homeTeam }: { homeTeam: number }): number;
+  abstract totalDrawsImplementation(match: IMatchResponse): number;
 
-  abstract totalLossesImplementation({ homeTeam }: { homeTeam: number }): number;
+  abstract totalLossesImplementation(match: IMatchResponse): number;
 
-  abstract goalsFavorImplementation({ homeTeam }: { homeTeam: number }): number;
+  abstract goalsFavorImplementation(match: IMatchResponse): number;
 
-  abstract goalsOwnImplementation({ homeTeam }: { homeTeam: number }): number;
+  abstract goalsOwnImplementation(match: IMatchResponse): number;
 
-  abstract goalsBalanceImplementation(match: IMatchResponse): number;
+  protected goalsBalanceImplementation(match: IMatchResponse): number {
+    const goalsFavor = this.goalsFavorImplementation(match);
+    const goalsOwn = this.goalsOwnImplementation(match);
 
-  abstract totalPointsImplementation(match: IMatchResponse): number;
+    const goalsBalance = goalsFavor - goalsOwn;
+    return goalsBalance;
+  }
 
-  abstract efficiencyImplementation(match: IMatchResponse): string;
+  protected totalPointsImplementation(match: IMatchResponse): number {
+    const totalVictories = this.totalVictoriesImplementation(match);
+    const totalDraws = this.totalDrawsImplementation(match);
+    const totalLosses = this.totalLossesImplementation(match);
+
+    const totalPoints = (totalVictories * 3) + totalDraws + (totalLosses * 0);
+    return totalPoints;
+  }
+
+  protected efficiencyImplementation(match: IMatchResponse): string {
+    const totalPoints = this.totalPointsImplementation(match);
+    const totalGames = this.totalGamesImplementation(match);
+
+    const efficiency = (totalPoints / (totalGames * 3)) * 100;
+    return efficiency.toFixed(2);
+  }
 
   private firstOrder() {
     this._leaderboard.sort((a, b) => {

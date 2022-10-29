@@ -17,6 +17,7 @@ export default (app: Application) => {
     matches.findAll,
     matches.create,
     leaderboard.home,
+    leaderboard.away,
     httpErrorMiddleware,
   );
 };

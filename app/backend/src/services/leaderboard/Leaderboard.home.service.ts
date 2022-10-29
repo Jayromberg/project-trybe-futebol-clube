@@ -100,29 +100,4 @@ export default class LeaderboardHome extends Leaderboard {
       return count;
     }, 0);
   }
-
-  goalsBalanceImplementation(match: IMatchResponse): number {
-    const goalsFavor = this.goalsFavorImplementation(match);
-    const goalsOwn = this.goalsOwnImplementation(match);
-
-    const goalsBalance = goalsFavor - goalsOwn;
-    return goalsBalance;
-  }
-
-  totalPointsImplementation(match: IMatchResponse): number {
-    const totalVictories = this.totalVictoriesImplementation(match);
-    const totalDraws = this.totalDrawsImplementation(match);
-    const totalLosses = this.totalLossesImplementation(match);
-
-    const totalPoints = (totalVictories * 3) + totalDraws + (totalLosses * 0);
-    return totalPoints;
-  }
-
-  efficiencyImplementation(match: IMatchResponse): string {
-    const totalPoints = this.totalPointsImplementation(match);
-    const totalGames = this.totalGamesImplementation(match);
-
-    const efficiency = (totalPoints / (totalGames * 3)) * 100;
-    return efficiency.toFixed(2);
-  }
 }
