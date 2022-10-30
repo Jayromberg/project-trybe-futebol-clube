@@ -7,7 +7,7 @@ import chaiHttp = require('chai-http');
 import { app } from '../app';
 import User from '../database/models/User.model';
 import Match from '../database/models/Match.model';
-import { mockMatches, mockLeaderboardAway } from './utils'
+import { mockMatches, mockLeaderboard } from './utils'
 
 import { Response } from 'superagent';
 
@@ -15,7 +15,7 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe('Teste de integração da rola /leaderboard/away', () => {
+describe('Teste de integração da rola /leaderboard', () => {
   let chaiHttpResponse: Response;
   let token: string;
 
@@ -49,12 +49,12 @@ describe('Teste de integração da rola /leaderboard/away', () => {
     (Match.findAll as sinon.SinonStub).restore();
   })
 
-  it('Returno da rota /leaderboard/away em caso de sucesso', async () => {
+  it('Returno da rota /leaderboard em caso de sucesso', async () => {
     chaiHttpResponse = await chai.request(app)
-    .get('/leaderboard/away')
+    .get('/leaderboard')
     .set('Authorization', token)
 
-    expect(chaiHttpResponse.status).to.equal(200);
-    expect(chaiHttpResponse.body).to.deep.equal(mockLeaderboardAway);
+    expect(chaiHttpResponse.status).to.equal(200);    
+    expect(chaiHttpResponse.body).to.deep.equal(mockLeaderboard);
   })
 });
