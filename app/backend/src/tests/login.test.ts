@@ -79,3 +79,28 @@ describe('Teste de integração da rola /login', () => {
   })
 });
 
+describe('Teste de caso especifico da rola /login', () => {
+  let chaiHttpResponse: Response;
+
+  before(async () => {
+    sinon
+      .stub(User, "findOne")
+      .resolves();
+  });
+
+  after(async () => {
+    (User.findOne as sinon.SinonStub).restore();
+  })
+
+  it('Returna erro 401 no caso de email errado', async () => {
+    chaiHttpResponse = await chai.request(app)
+    .post('/login')
+    .send({
+      email: 'admin@admin.com',
+      password: 'secret_admin'
+    });
+
+    expect(chaiHttpResponse.status).to.equal(401);
+    expect(chaiHttpResponse.body).to.deep.equal({ message: 'Incorrect email or password' });
+  })
+});

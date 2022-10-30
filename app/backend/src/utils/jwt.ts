@@ -15,7 +15,7 @@ export default class Token {
       email: user.email,
       role: user.role,
     };
-    const secret: string = process.env.JWT_SECRET || '';
+    const secret: string = process.env.JWT_SECRET as string;
     const token = this._jwt.sign(payload, secret);
     return token;
   }

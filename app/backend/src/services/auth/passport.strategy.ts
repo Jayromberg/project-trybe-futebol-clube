@@ -44,7 +44,7 @@ const headerStrategy = (pass: any) => {
   pass.use(new header.Strategy(
     async (token, done) => {
       try {
-        const secret: string = process.env.JWT_SECRET || '';
+        const secret: string = process.env.JWT_SECRET as string;
         const payload = jwt.verify(token, secret) as jwt.JwtPayload;
         const userData = await userService.findOne(payload.email);
         if (!userData) throw new HttpException(401, ACCESS_ERROR);
