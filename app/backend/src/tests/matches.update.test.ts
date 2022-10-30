@@ -48,7 +48,7 @@ describe('Teste de integração da rola POST /matches', () => {
     (Match.update as sinon.SinonStub).restore();
   })
 
-  it('Returno da rota PATCH /matches em caso de sucesso', async () => {
+  it('Resposta da rota PATCH /matches em caso de sucesso', async () => {
     chaiHttpResponse = await chai.request(app)
       .patch('/matches/1/finish')
       .set('Authorization', token)

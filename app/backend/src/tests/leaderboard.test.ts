@@ -49,7 +49,7 @@ describe('Teste de integração da rola /leaderboard', () => {
     (Match.findAll as sinon.SinonStub).restore();
   })
 
-  it('Returno da rota /leaderboard em caso de sucesso', async () => {
+  it('Resposta da rota /leaderboard em caso de sucesso', async () => {
     chaiHttpResponse = await chai.request(app)
     .get('/leaderboard')
     .set('Authorization', token)

@@ -32,7 +32,7 @@ describe('Teste de integração da rola /login', () => {
     (User.findOne as sinon.SinonStub).restore();
   })
 
-  it('Retorno da rota login em casos de sucesso', async () => {
+  it('Resposta da rota login em casos de sucesso', async () => {
     chaiHttpResponse = await chai.request(app)
       .post('/login')
       .send({
@@ -44,7 +44,7 @@ describe('Teste de integração da rola /login', () => {
     expect(chaiHttpResponse.body).to.haveOwnProperty("token")
   });
 
-  it('Retorna erro 400 na ausência do email', async () => {
+  it('Resposta com erro 400 na ausência do email', async () => {
     chaiHttpResponse = await chai.request(app)
       .post('/login')
       .send({
@@ -55,7 +55,7 @@ describe('Teste de integração da rola /login', () => {
     expect(chaiHttpResponse.body).to.deep.equal({ message: 'All fields must be filled' });
   })
 
-  it('Retorna erro 400 na ausência do senha', async () => {
+  it('Resposta com erro 400 na ausência do senha', async () => {
     chaiHttpResponse = await chai.request(app)
       .post('/login')
       .send({
@@ -66,12 +66,12 @@ describe('Teste de integração da rola /login', () => {
     expect(chaiHttpResponse.body).to.deep.equal({ message: 'All fields must be filled' });
   })
 
-  it('Retorna erro 401 no caso de senha errada', async () => {
+  it('Resposta com erro 401 no caso de senha errada', async () => {
     chaiHttpResponse = await chai.request(app)
       .post('/login')
       .send({
         email: 'admin@admin.com',
-        password: 'secret'
+        password: 'secret1212212'
       });
 
     expect(chaiHttpResponse.status).to.equal(401);
@@ -92,7 +92,7 @@ describe('Teste de caso especifico da rola /login', () => {
     (User.findOne as sinon.SinonStub).restore();
   })
 
-  it('Returna erro 401 no caso de email errado', async () => {
+  it('Resposta com erro 401 no caso de email errado', async () => {
     chaiHttpResponse = await chai.request(app)
     .post('/login')
     .send({
@@ -102,5 +102,55 @@ describe('Teste de caso especifico da rola /login', () => {
 
     expect(chaiHttpResponse.status).to.equal(401);
     expect(chaiHttpResponse.body).to.deep.equal({ message: 'Incorrect email or password' });
+  })
+
+  it('Resposta com erro 401 no caso de senha invalida', async () => {
+    chaiHttpResponse = await chai.request(app)
+      .post('/login')
+      .send({
+        email: 'admin@admin.com',
+        password: 'loren'
+      });
+
+    expect(chaiHttpResponse.status).to.equal(401);
+    expect(chaiHttpResponse.body).to.deep.equal({ message: 'Password validation failed' });
+  })
+
+  it('Resposta com erro 401 no caso de email invalida', async () => {
+    chaiHttpResponse = await chai.request(app)
+      .post('/login')
+      .send({
+        email: 'admin@admin',
+        password: 'secret_admin'
+      });
+
+    expect(chaiHttpResponse.status).to.equal(401);
+    expect(chaiHttpResponse.body).to.deep.equal({ message: 'Email validation failed' });
+  })
+});
+
+describe('Teste de caso especifico de erro desconhecido', () => {
+  let chaiHttpResponse: Response;
+  const error = new Error('Internal Error');
+  before(async () => {
+    sinon
+      .stub(User, "findOne")
+      .throws(error);  
+    });
+
+  after(async () => {
+    (User.findOne as sinon.SinonStub).restore();
+  })
+
+  it('Resposta com erro 500 no caso erro desconhecido', async () => {
+    chaiHttpResponse = await chai.request(app)
+      .post('/login')
+      .send({
+        email: 'admin@admin.com',
+        password: 'secret_admin'
+      });
+
+    expect(chaiHttpResponse.status).to.equal(500);
+    expect(chaiHttpResponse.body).to.deep.equal({ message: 'Internal Error' });
   })
 });

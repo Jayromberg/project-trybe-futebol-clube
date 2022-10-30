@@ -71,7 +71,7 @@ describe('Teste de integração da rola POST /matches', () => {
     (Match.create as sinon.SinonStub).restore();
   })
 
-  it('Returno da rota POST /matches em caso de sucesso', async () => {
+  it('Resposta da rota POST /matches em caso de sucesso', async () => {
     chaiHttpResponse = await chai.request(app)
       .post('/matches')
       .send({
@@ -94,7 +94,7 @@ describe('Teste de integração da rola POST /matches', () => {
         });
   })
 
-  it('Retorna o erro 422 ao tentar criar uma partida com times iguais', async () => {
+  it('Resposta com erro 422 ao tentar criar uma partida com times iguais', async () => {
     chaiHttpResponse = await chai.request(app)
       .post('/matches')
       .send({
@@ -109,7 +109,7 @@ describe('Teste de integração da rola POST /matches', () => {
     expect(chaiHttpResponse.body).to.deep.equal({ message: "It is not possible to create a match with two equal teams" });
   })
 
-  it('Retorna erro 401 no caso de token invalido', async () => {
+  it('Resposta com erro 401 no caso de token invalido', async () => {
     chaiHttpResponse = await chai.request(app)
     .post('/matches')
     .send({
@@ -124,7 +124,7 @@ describe('Teste de integração da rola POST /matches', () => {
     expect(chaiHttpResponse.body).to.deep.equal({ message: 'Token must be a valid token' });
   })
 
-  it('Retorna erro 404 no caso de time invalido', async () => {
+  it('Resposta com erro 404 no caso de time invalido', async () => {
     chaiHttpResponse = await chai.request(app)
     .post('/matches')
     .send({

@@ -56,7 +56,7 @@ describe('Teste de integração da rola /teams', () => {
     (Team.findAll as sinon.SinonStub).restore();
   })
 
-  it('Returno da rota /teams em caso de sucesso', async () => {
+  it('Resposta da rota /teams em caso de sucesso', async () => {
     chaiHttpResponse = await chai.request(app)
     .get('/teams')
     .set('Authorization', token)

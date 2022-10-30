@@ -42,7 +42,7 @@ describe('Teste de integração da rola /login/validate', () => {
     (User.findOne as sinon.SinonStub).restore();
   })
 
-  it('Returno da rota login/validate em caso de sucesso', async () => {
+  it('Resposta da rota login/validate em caso de sucesso', async () => {
     chaiHttpResponse = await chai.request(app)
     .get('/login/validate')
     .set('Authorization', token)
@@ -52,7 +52,7 @@ describe('Teste de integração da rola /login/validate', () => {
     expect(chaiHttpResponse.body).to.deep.equal({ role: 'admin' });
   })
 
-  it('Returna erro 400 em caso de ausência de token', async () => {
+  it('Resposta com erro 400 em caso de ausência de token', async () => {
     chaiHttpResponse = await chai.request(app)
     .get('/login/validate')
 
@@ -61,7 +61,7 @@ describe('Teste de integração da rola /login/validate', () => {
     expect(chaiHttpResponse.body).to.deep.equal({ message: 'Token not found' });
   })
 
-  it('Returna erro 401 no caso de token invalido', async () => {
+  it('Resposta com erro 401 no caso de token invalido', async () => {
     chaiHttpResponse = await chai.request(app)
     .get('/login/validate')
     .set('Authorization', 'token_invalido')
@@ -103,7 +103,7 @@ describe('Teste de caso especifico da rola /login/validate', () => {
     (User.findOne as sinon.SinonStub).restore();
   })
 
-  it('Returna erro 401 no caso de token corrompido', async () => {
+  it('Resposta com erro 401 no caso de token corrompido', async () => {
     chaiHttpResponse = await chai.request(app)
     .get('/login/validate')
     .set('Authorization', token)

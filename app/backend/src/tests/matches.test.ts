@@ -77,7 +77,7 @@ describe('Teste de integração da rola /matches', () => {
     (Match.findAll as sinon.SinonStub).restore();
   })
 
-  it('Returno da rota /matches em caso de sucesso', async () => {
+  it('Resposta da rota /matches em caso de sucesso', async () => {
     chaiHttpResponse = await chai.request(app)
     .get('/matches')
     .set('Authorization', token)
