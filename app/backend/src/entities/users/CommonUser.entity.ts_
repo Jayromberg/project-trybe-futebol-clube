@@ -1,7 +1,0 @@
-import User, { Role } from './User.entity';
-
-export default class CommonUser extends User {
-  constructor(email: string, password: string) {
-    super(email, password, Role.user);
-  }
-}
