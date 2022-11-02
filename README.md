@@ -158,7 +158,7 @@ Entre na pasta do backend ```cd app/backend```
 npm test
 ```
 
-![npm test](assets/test)
+![npm test](assets/test.png)
 
 Testes de cobertura:
 
