@@ -192,4 +192,4 @@ npm run test:coverage
 
 ---
 
-⭐️ Baseado em [João Pedro Oliveira](https://www.linkedin.com/in/jpoliveira7/)
+⭐️ README de referência: [João Pedro Oliveira](https://www.linkedin.com/in/jpoliveira7/)
