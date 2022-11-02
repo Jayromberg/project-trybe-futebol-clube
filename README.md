@@ -155,10 +155,10 @@ Na sua máquina você deve ter:
 Entre na pasta do backend ```cd app/backend```
 
 ```
-npm run test
+npm test
 ```
 
-![test](https://photos.google.com/photo/AF1QipNX_Pgkg-BqWDxJ21Dvo2fykXh_sPVcuJxUsphn)
+![npm test](assets/test)
 
 Testes de cobertura:
 
