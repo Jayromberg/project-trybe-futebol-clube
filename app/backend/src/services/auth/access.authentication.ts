@@ -10,6 +10,7 @@ const tokenExist = (token: string | undefined) => {
 
 export default (req: Request, res: Response, next: NextFunction) => {
   const token = req.header('Authorization');
+
   tokenExist(token);
   passport.authenticate(
     'header',

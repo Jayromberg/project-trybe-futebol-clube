@@ -1,6 +1,5 @@
 import { Router } from 'express';
 
-// import accessAuthentication from '../../services/auth/access.authentication';
 import LeaderboardController from '../../controllers/leaderboard/Home.controller';
 import FindAllMatchesService from '../../services/matches/FindAllMatches.service';
 import SequelizeFindAllMatchesRepository
@@ -16,7 +15,6 @@ const controller = new LeaderboardController(dataProcessing);
 
 router.get(
   '/leaderboard/home',
-  // accessAuthentication,
   (req, res) => controller.handle(req, res),
 );
 
