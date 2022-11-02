@@ -158,7 +158,7 @@ Entre na pasta do backend ```cd app/backend```
 npm run test
 ```
 
-![Captura de tela de 2022-10-26 10-52-53](https://user-images.githubusercontent.com/99822908/198052383-4fcb9b71-4147-48a2-ae1d-74495e34c93d.png)
+![test](https://photos.google.com/photo/AF1QipNX_Pgkg-BqWDxJ21Dvo2fykXh_sPVcuJxUsphn)
 
 Testes de cobertura:
 
@@ -187,7 +187,7 @@ npm run test:coverage
 - [Passport](https://www.passportjs.org/);
 
 ---
-⌨️ desenvolvido por [Jayromberg Lima Santos](www.linkedin.com/in/jayromberg-lima-santos) 😄
+⌨️ desenvolvido por [Jayromberg Lima Santos](https://www.linkedin.com/in/jayromberg-lima-santos) 😄
 
 ---
 
