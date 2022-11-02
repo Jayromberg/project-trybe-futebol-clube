@@ -166,8 +166,9 @@ Testes de cobertura:
 npm run test:coverage
 ```
 
-![Captura de tela de 2022-10-25 19-09-31](https://user-images.githubusercontent.com/99822908/198052434-3084e8f0-3609-4a8a-b8f7-b015cd7308f4.png)
+![coverage 01](assets/coverage1.png)
 
+![coverage 02](assets/coverage2.png)
 
 ## 🛠️ Ferramentas & Metodologias Utilizadas
 
