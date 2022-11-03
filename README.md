@@ -12,7 +12,7 @@ Clone o repositório:
 
 ```
 git clone git@github.com:Jayromberg/project-trybe-futebol-clube.git
-cd trybe-futebol-clube
+cd project-trybe-futebol-clube
 npm install
 ```
 
